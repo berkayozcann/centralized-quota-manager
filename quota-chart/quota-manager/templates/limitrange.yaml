@@ -2,20 +2,22 @@
 apiVersion: v1
 kind: LimitRange
 metadata:
-  name: {{ .name }}-limit
+  name: {{ .name }}-limitrange
   namespace: {{ .name }}
 spec:
   limits:
-  - type: Container
-    defaultRequest:
-      cpu: {{ .quota.limitRange.defaultRequest.cpu }}
-      memory: {{ .quota.limitRange.defaultRequest.memory }}
-    default:
-      cpu: {{ .quota.limitRange.default.cpu }}
-      memory: {{ .quota.limitRange.default.memory }}
-    max:
-      cpu: {{ .quota.limitRange.max.cpu }}
-      memory: {{ .quota.limitRange.max.memory }}
+    - type: Container
+      {{- if .limitRange.defaultRequest }}
+      defaultRequest:
+        cpu: {{ .limitRange.defaultRequest.cpu | default "100m" }}
+        memory: {{ .limitRange.defaultRequest.memory | default "128Mi" }}
+      {{- end }}
+      default:
+        cpu: {{ .limitRange.default.cpu | default "500m" }}
+        memory: {{ .limitRange.default.memory | default "512Mi" }}
+      max:
+        cpu: {{ .limitRange.max.cpu | default "2" }}
+        memory: {{ .limitRange.max.memory | default "3Gi" }}
 ---
 {{- end }}
 
