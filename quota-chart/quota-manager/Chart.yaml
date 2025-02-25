@@ -1,6 +1,7 @@
 apiVersion: v2
 name: quota-manager
-description: A Helm chart for Kubernetes
+description: A Helm chart for managing ResourceQuota and LimitRange in Kubernetes
+
 
 # A chart can be either an 'application' or a 'library' chart.
 #
